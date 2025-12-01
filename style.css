@@ -9,17 +9,34 @@
     flex-direction: column;
     align-items: flex-start;
     justify-content: center;
+    position: relative; /* for overlay */
 }
 #hero button{
     background-image: url("images/button.png");
     background-color:transparent ;
-    color: #088178;
+    color: var(--hero-btn-text);
     border: 0;
     padding: 14px 80px 14px 65px;
     background-repeat: no-repeat;
     cursor: pointer;
     font-weight: 700;
     font-size: 15px;
+}
+
+/* Dark mode override for hero CTA button (Shop Now) - remove light background image and use theme variables */
+.dark-mode #hero button{
+    background-image: none !important; /* remove the light-mode button graphic */
+    background-color: var(--btn-bg) !important; /* primary/dark background in dark mode */
+    color: var(--btn-text) !important; /* keep readable text color */
+    border: none !important;
+    padding: 14px 34px; /* smaller horizontal padding since we removed icon image */
+    border-radius: 6px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.25);
+}
+
+/* Optional: Make the button slightly lighter on hover in dark mode */
+.dark-mode #hero button:hover{
+    filter: brightness(1.05);
 }
 
 #banner{
@@ -34,4 +51,158 @@
     background-size: cover;
     background-position: center;
 }
+
+/* Banner overlay in dark mode (improve contrast but keep image visible) */
+.dark-mode #banner{ position: relative; }
+.dark-mode #banner::before{ content: ""; position: absolute; inset: 0; background: rgba(0,0,0,0.35); z-index: 0; }
+.dark-mode #banner > *{ position: relative; z-index: 1; }
+
+/* Navbar collapse in dark mode */
+.dark-mode .navbar-collapse{ background-color: var(--header-bg) !important; }
+
+/* Theme variables */
+:root{
+    --bg: #ffffff;
+    --text: #111827;
+    --primary: #0d6efd; /* bootstrap primary default */
+    --secondary: #6c757d;
+    --card-bg: #ffffff;
+    --header-bg: #f8f9fa; /* Bootstrap light equivalent */
+    --footer-bg: #f8f9fa;
+    --btn-bg: var(--primary);
+    --btn-text: #ffffff;
+    --on-primary: #ffffff; /* text color for elements on primary backgrounds */
+    --on-secondary: #ffffff; /* text color for elements on secondary backgrounds */
+    --hero-btn-text: #088178; /* light mode hero button color */
+    --btn-on-white: #0b1220;
+    --muted: #6b7280;
+    --shade-1: #f8fafc;
+    --shade-2: #f3f4f6;
+}
+
+.dark-mode{
+    --bg: #0b1220;
+    --text: #e6eef7;
+    --primary: #5b8cff;
+    --secondary: #2b3440;
+    --card-bg: #0f1724;
+    --header-bg: rgba(255,255,255,0.02);
+    --footer-bg: rgba(255,255,255,0.02);
+    --btn-bg: var(--primary);
+    --btn-text: #ffffff; /* keep button text readable on primary buttons in dark mode */
+    --on-primary: #ffffff;
+    --on-secondary: #ffffff;
+    --hero-btn-text: var(--btn-on-white);
+    --btn-on-white: #0b1220;
+    --muted: rgba(230,238,247,0.65);
+    --shade-1: #0f1724;
+    --shade-2: #071025;
+}
+
+/* Apply variables */
+body{
+    background-color: var(--bg);
+    color: var(--text);
+}
+
+/* Section & general element styles */
+section, footer, .card, .p-4{ background-color: var(--card-bg); color: var(--text);} 
+.dark-mode #header{ background-color: var(--header-bg); border-bottom: 1px solid rgba(255,255,255,0.03);} 
+.dark-mode #header{ box-shadow: 0 1px 10px rgba(0,0,0,0.12); }
+.dark-mode footer{ background-color: var(--footer-bg); }
+
+/* Override Bootstrap background utilities in dark mode */
+.dark-mode .bg-light{ background-color: var(--header-bg) !important; color: var(--text) !important; }
+.dark-mode .bg-primary{ background-color: var(--primary) !important; color: var(--on-primary) !important; }
+.dark-mode .bg-secondary{ background-color: var(--secondary) !important; color: var(--on-secondary) !important; }
+
+/* Ensure text-light/white show up on dark backgrounds */
+.dark-mode .text-light, .dark-mode .text-white{ color: var(--on-primary) !important; }
+
+/* Specific target for hero area */
+.dark-mode #hero, .dark-mode #hero *{ color: var(--on-primary) !important; }
+
+/* Add a subtle dark overlay in dark mode for legibility on top of hero background image */
+.dark-mode #hero::before{ content: ""; position: absolute; inset: 0; background: rgba(0,0,0,0.35); z-index: 0; }
+.dark-mode #hero > *{ position: relative; z-index: 1; }
+.dark-mode .bg-white{ background-color: var(--card-bg) !important; color: var(--text) !important; }
+.dark-mode .text-secondary{ color: rgba(230,238,247,0.8) !important; }
+.dark-mode .text-muted{ color: rgba(230,238,247,0.65) !important; }
+.dark-mode .text-dark{ color: var(--text) !important; }
+.dark-mode .border{ border-color: rgba(255,255,255,0.06) !important; }
+
+/* Links and nav items in dark mode */
+.dark-mode a:not(.btn){ color: var(--text) !important; }
+.dark-mode a:hover{ color: var(--primary) !important; }
+.dark-mode .nav-link{ color: var(--text) !important; }
+.dark-mode #header .nav-link{ color: var(--text) !important; }
+.dark-mode #header .nav-link:hover{ color: var(--primary) !important; }
+.dark-mode #header .nav-link.active{ color: var(--primary) !important; }
+
+/* header icons and toggler color */
+.dark-mode #header i, .dark-mode #header .fa{ color: var(--text) !important; }
+.dark-mode #header .logo{ filter: brightness(1.25) saturate(1.2) contrast(1.15); }
+
+/* Buttons */
+.dark-mode .btn.btn-light{ background-color: var(--card-bg) !important; color: var(--text) !important; border-color: rgba(255,255,255,0.06) !important; }
+.dark-mode .bg-primary .btn.btn-light{ background-color: #ffffff !important; color: #0b1220 !important; border-color: rgba(0,0,0,0.06) !important; }
+.dark-mode .btn.btn-primary{ background-color: var(--primary) !important; border-color: var(--primary) !important; color: var(--btn-text) !important; }
+.dark-mode .btn-outline-secondary{ border-color: rgba(255,255,255,0.08) !important; color: var(--text) !important; }
+
+/* Form controls */
+.dark-mode .form-control{ background-color: var(--card-bg) !important; color: var(--text) !important; border-color: rgba(255,255,255,0.06) !important; }
+.dark-mode ::placeholder{ color: rgba(230,238,247,0.5) !important; }
+
+/* Cards & headings */
+.dark-mode .card, .dark-mode .bg-white{ background-color: var(--card-bg) !important; color: var(--text) !important; }
+.dark-mode h1, .dark-mode h2, .dark-mode h3, .dark-mode h4, .dark-mode h5, .dark-mode h6{ color: var(--text) !important; }
+
+/* Icons */
+.dark-mode .fa, .dark-mode i{ color: var(--text) !important; }
+
+/* Header logo and toggler styles in dark mode */
+.dark-mode #header .logo{ filter: brightness(1.2) saturate(1.2) contrast(1.05); }
+.dark-mode .navbar-toggler{ border-color: rgba(255,255,255,0.08) !important; }
+.dark-mode .navbar-toggler-icon{ background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'><path stroke='%23ffffff' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/></svg>") !important; }
+
+
+/* Buttons */
+.dark-mode .btn{ background-color: var(--btn-bg) !important; color: var(--btn-text) !important; border: none !important; }
+.btn-outline-secondary{ color: var(--text); border-color: rgba(255,255,255,0.08); background-color: transparent; }
+.theme-toggle{ display:inline-flex; align-items:center; gap:.5rem; padding:.25rem .6rem; border-radius:.25rem; margin-left:.5rem; }
+.theme-toggle:focus{ outline:2px solid rgba(91,140,255,0.25); outline-offset:2px; }
+.theme-toggle .fa{ font-size: 16px; }
+
+/* Cards */
+.card{ background-color: var(--card-bg); color: var(--text); }
+
+/* Links */
+a, .nav-link{ color: var(--text) !important; }
+a:hover{ color: var(--primary) !important; }
+
+.dark-mode .text-black{ color: var(--text) !important; }
+.dark-mode .text-black:hover{ color: var(--primary) !important; }
+
+/* Separate Add to Cart styles for light vs dark mode */
+/* Light mode: make add-to-cart more prominent with a warm gradient */
+.add-to-cart{
+    background: linear-gradient(90deg, #ff7e5f 0%, #feb47b 100%);
+    color: #ffffff !important;
+    padding: .5rem 1rem !important;
+    border-radius: .5rem !important;
+    box-shadow: 0 6px 18px rgba(254, 180, 123, 0.2);
+    transition: transform .15s ease, box-shadow .15s ease;
+}
+.add-to-cart:hover{ transform: translateY(-1px); box-shadow: 0 10px 24px rgba(254, 180, 123, 0.25); }
+.add-to-cart:focus{ outline: none; transform: translateY(-1px); box-shadow: 0 10px 24px rgba(254, 180, 123, 0.35); }
+.add-to-cart:active{ transform: translateY(0); box-shadow: 0 6px 18px rgba(254, 180, 123, 0.18); }
+
+/* Dark-mode override: keep Add-to-Cart aligned with site's dark primary button look */
+.dark-mode .add-to-cart{ background: var(--primary) !important; color: var(--btn-text) !important; box-shadow: 0 2px 8px rgba(0,0,0,0.35) !important; }
+.dark-mode .add-to-cart:hover{ filter: brightness(1.05); }
+.dark-mode .add-to-cart:focus{ outline: 2px solid rgba(91,140,255,0.18); outline-offset: 2px; }
+
+/* If we ever want icon spacing consistent */
+.add-to-cart .fa-shopping-cart{ margin-right: .5rem; }
+
 
