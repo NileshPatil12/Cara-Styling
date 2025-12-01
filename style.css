@@ -1,6 +1,6 @@
 /* hero */
 #hero{
-    background-image: url("hero4.png");
+    background-image: url("images/hero4.png");
     height: 80vh;
     width: 100%;
     background-size: cover;
@@ -11,7 +11,7 @@
     justify-content: center;
 }
 #hero button{
-    background-image: url("button.png");
+    background-image: url("images/button.png");
     background-color:transparent ;
     color: #088178;
     border: 0;
